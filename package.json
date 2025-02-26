@@ -4,7 +4,9 @@
   "description": "VSCode Marketplace Extension Scraper",
   "main": "src/cli.js",
   "bin": {
-    "vscode-scraper": "./src/cli.js"
+    "vscode-scraper": "./src/cli.js",
+    "vscode-db-scraper": "./src/cli-db.js",
+    "vscode-files-scraper": "./src/cli-files.js"
   },
   "scripts": {
     "start": "node src/cli.js \"C:\\Extensions\"",

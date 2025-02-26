@@ -4,6 +4,9 @@ const { connectDB } = require('./config/database');
 const path = require('path');
 const fs = require('fs').promises;
 const Extension = require('./database/models/Extension');
+const databaseScraper = require('./scraper/databaseScraper');
+const fileScraper = require('./scraper/fileScraper');
+const program = require('commander');
 
 // Argumentlarni olish
 const args = process.argv.slice(2);
@@ -61,5 +64,36 @@ const main = async () => {
     process.exit(1);
   }
 };
+
+// Database scraping command
+program
+  .command('scrape-db')
+  .description('Scrape extensions to database only')
+  .action(async () => {
+    try {
+      await databaseScraper.initialize();
+      await databaseScraper.scrapeExtensions();
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      await databaseScraper.close();
+    }
+  });
+
+// File scraping command
+program
+  .command('scrape-files')
+  .description('Download files for extensions in database')
+  .requiredOption('-p, --path <path>', 'Path to save extension files')
+  .action(async (options) => {
+    try {
+      await fileScraper.initialize();
+      await fileScraper.scrapeFiles(options.path);
+    } catch (error) {
+      console.error('Error:', error);
+    } finally {
+      await fileScraper.close();
+    }
+  });
 
 main(); 

@@ -1,5 +1,3 @@
-
-
 // Bu fayl endi faqat tip uchun reference bo'lib xizmat qiladi 
 
 const { DataTypes } = require('sequelize');
@@ -86,6 +84,11 @@ const Extension = sequelize.define('Extension', {
   local_path: {
     type: DataTypes.TEXT,
     allowNull: true
+  },
+  is_created: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    allowNull: false
   }
 });
 
